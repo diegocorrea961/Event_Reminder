@@ -3,11 +3,9 @@
 export default function ConfirmDeleteEvent({
   onConfirm,
   onCancel,
-  onEventDeleted,
 }: {
   onConfirm: () => void;
   onCancel: () => void;
-  onEventDeleted: () => void;
 }) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 min-h-screen flex items-center justify-center">
@@ -15,9 +13,7 @@ export default function ConfirmDeleteEvent({
         <p>Tem certeza que deseja excluir este evento?</p>
         <div className="flex items-center justify-between">
           <button
-            onClick={() => {
-              (onConfirm(), onEventDeleted());
-            }}
+            onClick={() => onConfirm()}
             className="border border-fuchsia-800 text-fuchsia-800 rounded-lg shadow-lg p-5 cursor-pointer"
           >
             Yes
