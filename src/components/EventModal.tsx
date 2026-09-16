@@ -2,36 +2,68 @@
 
 import { useState } from "react";
 
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+}
+
 export default function EventModal({
   onClose,
   onEventCreated,
+  eventToEdit,
 }: {
   onClose: () => void;
   onEventCreated: () => void;
+  eventToEdit: Event | null;
 }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState(eventToEdit?.title ?? "");
+  const [description, setDescription] = useState(
+    eventToEdit?.description ?? "",
+  );
+  const [date, setDate] = useState(
+    eventToEdit ? eventToEdit.date.split("T")[0] : "",
+  );
+  const [message, setMessage] = useState(
+    eventToEdit ? "Event edited" : "Event created",
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const ConvertedDate = new Date(date).toISOString();
+    const url = eventToEdit ? `/api/events/${eventToEdit.id}` : "/api/events";
+    const method = eventToEdit ? "PUT" : "POST";
 
-    const response = await fetch("/api/events", {
-      method: "POST",
+    const response = await fetch(url, {
+      method: method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description, date: ConvertedDate }),
     });
 
+    //  --- O efeito acima é exatamente correspondente ao efeito debaixo ---
+    // if (eventToEdit) {
+    //   response = await fetch(`/api/events/${eventToEdit.id}`, {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ title, description, date: ConvertedDate }),
+    //   });
+    // } else {
+    //   response = await fetch("/api/events", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ title, description, date: ConvertedDate }),
+    //   });
+    // }
+
     const data = await response.json();
     if (response.ok) {
-      setMessage("Event created");
+      setMessage(eventToEdit ? "Event edited" : "Event created");
       //   The modal must be closes after click on "Save"
       //   and the event have been created
-      onClose();
       onEventCreated();
+      onClose();
     } else {
       setMessage(data.message);
     }
@@ -44,7 +76,7 @@ export default function EventModal({
         className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-gray-800"
       >
         <h2 className="flex items-center justify-center text-fuchsia-400 font-semibold text-3xl">
-          New event
+          {eventToEdit ? "Edit event" : "New event"}
         </h2>
         <input
           value={title}
