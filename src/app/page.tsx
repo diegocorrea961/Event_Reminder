@@ -32,6 +32,16 @@ export default function Home() {
     });
   }
 
+  async function handleDeleteReload() {
+    if (eventToDelete) {
+      await handleDelete(eventToDelete.id);
+      await loadEvents();
+      setEventToDelete(null);
+    } else {
+      return "Anyone event was selected";
+    }
+  }
+
   useEffect(() => {
     loadEvents();
   }, []);
@@ -73,7 +83,6 @@ export default function Home() {
             <p
               onClick={(e) => {
                 e.stopPropagation();
-                // handleDelete(event.id);
                 setEventToDelete(event);
               }}
               className="flex items-center justify-end mt-3 text-xl md:hover:text-red-500"
@@ -85,11 +94,7 @@ export default function Home() {
 
         {eventToDelete && (
           <ConfirmDeleteEvent
-            onConfirm={() => {
-              handleDelete(eventToDelete.id);
-              setEventToDelete(null);
-            }}
-            onEventDeleted={loadEvents}
+            onConfirm={handleDeleteReload}
             onCancel={() => setEventToDelete(null)}
           />
         )}
