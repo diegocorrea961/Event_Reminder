@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -22,6 +23,7 @@ export default function LoginPage() {
       setMessage("E-mail ou senha inválidos");
     } else {
       setMessage("Login successfull");
+      redirect("/");
     }
   }
 
@@ -61,7 +63,7 @@ export default function LoginPage() {
           </p>
           <button
             type="submit"
-            className="flex items-center justify-center p-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800"
+            className="flex items-center justify-center p-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800 hover:scale-105 transition-transform"
           >
             <p className="text-white">Login</p>
           </button>

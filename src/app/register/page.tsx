@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function RegisterPage() {
@@ -21,6 +22,7 @@ export default function RegisterPage() {
     const data = await response.json();
     if (response.ok) {
       setMessage("Registration successfull");
+      redirect("/login");
     } else {
       setMessage(data.message);
     }
@@ -69,7 +71,7 @@ export default function RegisterPage() {
           </p>
           <button
             type="submit"
-            className="flex items-center justify-center p-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800"
+            className="flex items-center justify-center p-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800 hover:scale-105 transition-transform"
           >
             Register
           </button>
