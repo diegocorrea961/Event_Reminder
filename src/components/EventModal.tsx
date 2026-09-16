@@ -38,11 +38,14 @@ export default function EventModal({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900">
+    <div className="fixed inset-0 bg-black/50 z-50 min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-gray-800"
       >
+        <h2 className="flex items-center justify-center text-fuchsia-400 font-semibold text-3xl">
+          New event
+        </h2>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}

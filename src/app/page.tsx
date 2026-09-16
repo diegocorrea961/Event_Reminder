@@ -3,6 +3,7 @@
 import EventModal from "@/components/EventModal";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 interface Event {
   id: number;
@@ -14,6 +15,7 @@ interface Event {
 export default function Home() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: session } = useSession();
 
   async function loadEvents() {
     const response = await fetch("/api/events");
@@ -31,8 +33,13 @@ export default function Home() {
         <h1 className="text-5xl text-fuchsia-700 font-(family-name:--font-comic-relief)">
           Chronos
         </h1>
-        <span className="flex gap-3">
-          <p>Olá (nome do usuário)</p>
+        <span className="flex">
+          <p className="text-md font-semibold">
+            Olá{" "}
+            <span className="text-fuchsia-400 text-sm font-medium">
+              {session?.user?.name}
+            </span>
+          </p>
           <button
             onClick={() => signOut()}
             className="text-white text-sm hover:text-fuchsia-400 cursor-pointer"
