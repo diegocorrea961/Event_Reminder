@@ -1,10 +1,10 @@
 "use client";
 
 import EventModal from "@/components/EventModal";
-import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import ConfirmDeleteEvent from "@/components/ConfirmDeleteEvent";
+import Header from "@/components/Header";
+import { MONTHS } from "@/lib/months";
 
 interface Event {
   id: number;
@@ -16,7 +16,6 @@ interface Event {
 export default function Home() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: session } = useSession();
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
 
@@ -46,51 +45,57 @@ export default function Home() {
     loadEvents();
   }, []);
 
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
+  const monthEvents = events.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getUTCFullYear() === currentYear &&
+      eventDate.getUTCMonth() === currentMonth
+    );
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-900">
-      <header className="w-full flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-fuchsia-900">
-        <h1 className="text-5xl text-fuchsia-700 font-(family-name:--font-comic-relief)">
-          Chronos
-        </h1>
-        <span className="flex">
-          <p className="text-md font-semibold">
-            Olá{" "}
-            <span className="text-fuchsia-400 text-sm font-medium">
-              {session?.user?.name}
-            </span>
-          </p>
-          <button
-            onClick={() => signOut()}
-            className="text-white text-sm hover:text-fuchsia-400 cursor-pointer"
-          >
-            ➜]
-          </button>
-        </span>
-      </header>
+      <Header />
       <div className="w-full flex-1 flex items-center justify-center gap-6">
-        {events.map((event) => (
-          <div
-            key={event.id}
-            className="bg-gray-800 max-w-sm shadow-2xl rounded-lg p-8 border border-fuchsia-800 cursor-pointer"
-            onClick={() => {
-              setSelectedEvent(event);
-              setIsModalOpen(true);
-            }}
-          >
-            <p className="text-lg font-bold text-white">{event.title}</p>
-            <p className="text-sm text-gray-300">{event.description}</p>
-            <p className="text-sm text-fuchsia-400 mt-2">{event.date}</p>
-            <p
-              onClick={(e) => {
-                e.stopPropagation();
-                setEventToDelete(event);
+        {events.length === 0 ? (
+          <p className="text-gray-300 text-center max-w-sm">
+            Você ainda não tem eventos cadastrados. Toque em + para criar o
+            primeiro.
+          </p>
+        ) : monthEvents.length === 0 ? (
+          <p className="text-gray-300 text-center max-w-sm">
+            Você ainda não tem eventos em {MONTHS[currentMonth]}. Toque em +
+            para adicionar.
+          </p>
+        ) : (
+          monthEvents.map((event) => (
+            <div
+              key={event.id}
+              className="bg-gray-800 max-w-sm shadow-2xl rounded-lg p-8 border border-fuchsia-800 cursor-pointer"
+              onClick={() => {
+                setSelectedEvent(event);
+                setIsModalOpen(true);
               }}
-              className="flex items-center justify-end mt-3 text-xl md:hover:text-red-500"
             >
-              🗑
-            </p>
-          </div>
-        ))}
+              <p className="text-lg font-bold text-white">{event.title}</p>
+              <p className="text-sm text-gray-300">{event.description}</p>
+              <p className="text-sm text-fuchsia-400 mt-2">{event.date}</p>
+              <p
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEventToDelete(event);
+                }}
+                className="flex items-center justify-end mt-3 text-xl md:hover:text-red-500"
+              >
+                🗑
+              </p>
+            </div>
+          ))
+        )}
 
         {eventToDelete && (
           <ConfirmDeleteEvent
