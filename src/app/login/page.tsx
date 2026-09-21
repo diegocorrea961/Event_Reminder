@@ -28,23 +28,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-zinc-900">
       <div className="w-full flex flex-col items-center gap-6">
-        <h1 className="text-7xl text-fuchsia-700 font-(family-name:--font-comic-relief)">
+        <h1 className="text-7xl text-amber-700 font-(family-name:--font-bungee-shade)">
           Chronos
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-gray-800"
+          className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-zinc-800"
         >
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-gray-600 border border-fuchsia-900 p-2 rounded-lg outline-none w-full"
+            className="bg-zinc-600 border border-amber-900 p-2 rounded-lg outline-none w-full"
             placeholder="Write your email"
           />
           <p className="flex items-end justify-end text-[10px]">
-            <Link href={"/register"} className="text-fuchsia-700">
+            <Link href={"/register"} className="text-amber-700">
               Forget your password?
             </Link>
           </p>
@@ -52,24 +52,24 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-gray-600 border border-fuchsia-900 p-2 rounded-lg outline-none w-full"
+            className="bg-zinc-600 border border-amber-900 p-2 rounded-lg outline-none w-full"
             placeholder="Write your password"
           />
           <p className="flex items-center justify-end gap-1 text-sm">
             Not account?
-            <Link href={"/register"} className="text-fuchsia-700">
+            <Link href={"/register"} className="text-amber-700">
               Register
             </Link>
           </p>
           <button
             type="submit"
-            className="flex items-center justify-center p-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800 hover:scale-105 transition-transform"
+            className="flex items-center justify-center p-3 rounded-lg bg-amber-700 cursor-pointer md:hover:bg-amber-800 hover:scale-105 transition-transform"
           >
             <p className="text-white">Login</p>
           </button>
           <div className="m-1">
             {message && (
-              <p className="text-fuchsia-700 mt-4 flex items-center justify-center">
+              <p className="text-amber-700 mt-4 flex items-center justify-center">
                 {message}
               </p>
             )}

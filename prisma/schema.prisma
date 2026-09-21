@@ -17,7 +17,7 @@ datasource db {
 model User {
   id              Int @id @default(autoincrement())
   events          Event[]
-  nickname        String @unique
+  nickname        String
   email           String @unique
   password        String
 }

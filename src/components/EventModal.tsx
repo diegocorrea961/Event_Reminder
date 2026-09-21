@@ -73,28 +73,28 @@ export default function EventModal({
     <div className="fixed inset-0 bg-black/50 z-50 min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-gray-800"
+        className="w-full max-w-sm flex flex-col gap-4 shadow-lg px-6 py-9 rounded-lg bg-zinc-800"
       >
-        <h2 className="flex items-center justify-center text-fuchsia-400 font-semibold text-3xl">
+        <h2 className="flex items-center justify-center text-amber-400 font-semibold text-3xl">
           {eventToEdit ? "Edit event" : "New event"}
         </h2>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="bg-gray-600 border border-fuchsia-900 p-2 rounded-lg outline-none w-full"
+          className="bg-zinc-600 border border-amber-900 p-2 rounded-lg outline-none w-full"
           placeholder="Title"
         />
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="bg-gray-600 border border-fuchsia-900 p-2 rounded-lg outline-none w-full"
+          className="bg-zinc-600 border border-amber-900 p-2 rounded-lg outline-none w-full"
           placeholder="Description"
         />
         <input
           value={date}
           type="date"
           onChange={(e) => setDate(e.target.value)}
-          className="bg-gray-600 border border-fuchsia-900 p-2 rounded-lg outline-none w-full"
+          className="bg-zinc-600 border border-amber-900 p-2 rounded-lg outline-none w-full"
           placeholder="Date"
         />
 
@@ -102,13 +102,13 @@ export default function EventModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex items-center justify-center py-2 px-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800 hover:scale-105 transition-transform"
+            className="flex items-center justify-center py-2 px-3 rounded-lg bg-amber-700 cursor-pointer md:hover:bg-amber-800 hover:scale-105 transition-transform"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="flex items-center justify-center py-2 px-3 rounded-lg bg-fuchsia-700 cursor-pointer md:hover:bg-fuchsia-800 hover:scale-105 transition-transform"
+            className="flex items-center justify-center py-2 px-3 rounded-lg bg-amber-700 cursor-pointer md:hover:bg-amber-800 hover:scale-105 transition-transform"
           >
             Save
           </button>

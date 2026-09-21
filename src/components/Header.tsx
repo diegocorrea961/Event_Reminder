@@ -11,7 +11,7 @@ export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
-    <header className="w-full flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-fuchsia-900">
+    <header className="w-full flex items-center justify-between px-6 py-4 bg-zinc-800 border-b border-amber-900">
       <div className="relative">
         <button
           onClick={() => setIsNavOpen(!isNavOpen)}
@@ -21,19 +21,19 @@ export default function Header() {
         </button>
         {isNavOpen && <BurgerDropdown onClose={() => setIsNavOpen(false)} />}
       </div>
-      <h1 className="text-5xl text-fuchsia-700 font-(family-name:--font-comic-relief)">
+      <h1 className="text-5xl text-amber-700 font-(family-name:--font-bungee-shade)">
         Chronos
       </h1>
       <div className="relative flex items-center">
         <p className="text-md font-semibold">
           Olá{" "}
-          <span className="text-fuchsia-400 text-sm font-medium">
+          <span className="text-amber-400 text-sm font-medium">
             {session?.user?.name}
           </span>
         </p>
         <button
           onClick={() => setIsProfileOpen(!isProfileOpen)}
-          className="text-white text-2xl ml-2 cursor-pointer hover:text-fuchsia-400"
+          className="text-white text-2xl ml-2 cursor-pointer hover:text-amber-400"
         >
           𖨆
         </button>
