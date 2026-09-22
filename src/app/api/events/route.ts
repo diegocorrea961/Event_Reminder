@@ -1,10 +1,9 @@
 import { auth } from "@/auth";
-import { PrismaClient } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const prisma = new PrismaClient();
 
   const session = await auth();
   if (session?.user == null) {
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  const prisma = new PrismaClient();
   const session = await auth();
   if (session?.user == null) {
     return NextResponse.json(

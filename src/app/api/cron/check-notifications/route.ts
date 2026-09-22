@@ -1,14 +1,24 @@
-import { PrismaClient } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import { sendEventReminderEmail } from "@/lib/email";
 import { daysUntil } from "@/lib/dates";
 import { resolveNotifications } from "@/lib/notifications";
 import { NextResponse } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 
-const prisma = new PrismaClient();
+function isAuthorized(request: Request): boolean {
+  const secret = process.env.CRON_SECRET;
+  if (!secret || secret.length < 32) return false;
+
+  const provided = Buffer.from(request.headers.get("authorization") ?? "");
+  const expected = Buffer.from(`Bearer ${secret}`);
+
+  return (
+    provided.length === expected.length && timingSafeEqual(provided, expected)
+  );
+}
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!isAuthorized(request)) {
     return NextResponse.json({ message: "Não autorizado." }, { status: 401 });
   }
 

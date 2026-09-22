@@ -1,10 +1,10 @@
-import { Prisma, PrismaClient } from "@/generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const prisma = new PrismaClient();
 
   if (
     !body.nickname?.trim() ||

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { PrismaClient } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function PUT(
@@ -7,7 +7,6 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
-  const prisma = new PrismaClient();
   const body = await request.json();
   const session = await auth();
   if (session?.user == null) {
@@ -58,7 +57,6 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
-  const prisma = new PrismaClient();
   const session = await auth();
   if (session?.user == null) {
     return NextResponse.json(
